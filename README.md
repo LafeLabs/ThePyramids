@@ -1,3 +1,5 @@
+[link to github repository of The Pyramids at github.com/lafelabs/ThePyramids](https://github.com/LafeLabs/ThePyramids/)
+
 ## [scrolleditor.html](scrolleditor.html)
 
 # The Pyramids
