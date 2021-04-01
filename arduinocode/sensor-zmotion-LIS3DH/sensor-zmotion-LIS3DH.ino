@@ -20,39 +20,32 @@
 // I2C
 Adafruit_LIS3DH lis = Adafruit_LIS3DH();
 
-
 //P = Cos[omega*t]
 float P[] = {1.00,0.92,0.71,0.38,0.00,-0.38,-0.71,-0.92,-1.00,-0.92,-0.71,-0.38,0.00,0.38,0.71,0.92};
-//Q = Sin[omega*t]*Exp[t/tau]
+//Q = Sin[omega*t]
 float Q[] = {0.00,0.38,0.71,0.92,1.00,0.92,0.71,0.38,0.00,-0.38,-0.71,-0.92,-1.00,-0.92,-0.71,-0.38};
       
-float p=0.0;  //integrated sin power
-float q=0.0;  //integrated cos power
+float p=0.0;  //integrated sine power
+float q=0.0;  //integrated cosine power
 //x = input variable array
 float x[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-float xmean = 0.0;
 //y = input variable array
 float y[] = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
-float ymean = 0.0;
 
-int m=0;
 float F = 0.0;
-float Fmax = 1023.0;
-float gamma = 7.0;
 float vold = 0.0;
 float vnew = 0.0;
-int deltat = 30;  //3 Hz/8
+int deltat = 30;  //time between data points in ms
 float v=0.0;
 float vmax = 255.0;
 float vmin = 20.0;
 
-float k = 10.0;
-float n = 0.0;
-int tau = 500;
-int i = 0;
+float k = 70.0;//converts from units of x to units of v, has units of inverse seconds
+
+float n = 0.0;//number of sample times for a decay, tau/deltat
+int tau = 500;//decay time in ms
 
 int motorpin = 5;
-
 int motorspeed = 0;
 
 void setup(void) {
@@ -79,43 +72,29 @@ void setup(void) {
 
 void loop() {
 
-  for (m = 15; m > 0; m--){
+  for (int m = 15; m > 0; m--){
    x[m] = x[m-1]; 
    y[m] = y[m-1];
   }
 
-  i++;
-  if(i>15){
-    i = 0;
-  }
-
-  
   lis.read();      // get X Y and Z data at once
 
   /* Or....get a new sensor event, normalized */ 
   sensors_event_t event; 
   lis.getEvent(&event);
   
-  /* Display the results (acceleration is measured in m/s^2) */
-
   x[0] = event.acceleration.z;
 
   p=0.0;
   q=0.0;
-  for (m = 0; m < 16;m++){
+  for (int m = 0; m < 16;m++){
      p = p + P[m]*x[m];
      q = q + Q[m]*x[m];
   }
   F = k*sqrt(p*p + q*q)/16;
-
-
-  if (F > Fmax){
-    F = Fmax;
-  }  
-  vnew = vold + ((F*gamma - vold)/n);
   
+  vnew = vold + ((F - vold)/n);  
   vold = vnew;
-
 
   motorspeed = vnew;  
   if (vnew > vmax)
@@ -126,23 +105,8 @@ void loop() {
     motorspeed = 0;
   }
 
-  
-  analogWrite(motorpin,motorspeed);
-  
+  analogWrite(motorpin,motorspeed);  
   Serial.println(motorspeed);
-
-//Serial.print(vnew);
-//  Serial.print(",");
- // Serial.print(P[i]);
- // Serial.print(",");  
- // Serial.println(x[0]);
-  
-  //  Serial.print(","); Serial.print(event.acceleration.y); 
-  //Serial.print(","); Serial.println(event.acceleration.z); 
-
-  //Serial.println();
-   
-
   delay(deltat); 
 
 }

@@ -1,0 +1,85 @@
+[mathuser.php?scroll=scrolls/oscillator](mathuser.php?scroll=scrolls/oscillator)
+
+# Oscillator 
+
+We seek to simulate the process of biological sensation of periodic stimulus. We assume that the output sensation scales with amplitude of oscillation of the input motion at some peak frequency, builds up over time as stimulus is applied, and decays over time as stimulus is withdrawn.  The input variable can be a pressure, force, or motion or force sensor of any kind.  The "response" output is converted to a power output which controls the speed of a motor, completing the loop from biological force applied to biological sensation.
+
+We first choose our peak frequency of oscillation f, with period 
+
+$$ T = \frac{1}{f} $$
+
+We now integrate over one period both cosine and sine to get integrated power in the two quadratures p and q:
+
+$$ 
+  p  = \int_{t-T}^t\cos{\left(\frac{2\pi t}{T}\right)}x(t)dt
+$$
+
+$$ 
+  q  = \int_{t-T}^t\sin{\left(\frac{2\pi t}{T}\right)}x(t)dt
+$$
+
+We always integrate over sine and cosine functions that have a period equal to 16 times the oscillation frequency.   To do this we define lookup tables of sine and cosine over one period with 16 points as follows:
+
+$$
+P_m = \cos{\left(\frac{2\pi m}{16}\right)}, 0 \leq m \in \mathbb{Z} \leq 15
+$$
+$$
+Q_m = \sin{\left(\frac{2\pi m}{16}\right)}, 0 \leq m \in \mathbb{Z} \leq 15
+$$
+
+
+And then for discrete data we can evaluate p and q as follows:
+
+$$
+p=\frac{1}{16}\sum_{m = 0}^{15}P_m x_m
+$$
+and 
+$$
+q=\frac{1}{16}\sum_{m = 0}^{15}Q_m x_m,
+$$
+
+where $x_m$ are x values sampled every $\Delta t$, which is 1/16th of the period T.  
+
+We now add these in quadrature and take the square root to get a combined effective "force" F which is linear in amplitude of the oscillations in either quadrature. We add a constant "k" here which converts from the units of "x" to the units of "F":  
+
+$$
+F = k\sqrt{p^2 + q^2}
+$$
+
+The decay time $\tau$ is normalized to the sample time $\Delta t$ to get a decay time n in units of number of sample points.  We build a model where the output speed v asymptotically approaches a terminal velocity equal to F.  Speed starts out at zero.  So we write down an equation of motion by inspection as follows:
+
+$$
+v(t) = F(1 - e^{-t/\tau})
+$$
+
+We can work backwards and again by inspection see that a differential equation with this solution is:
+
+$$
+\tau \dot{v} = F - v.
+$$
+
+We can see that this equation has the correct solution by plugging in the above value of v to get 
+
+$$
+\dot{v} = \frac{1}{\tau}(F - F + e^{t/\tau})  = \frac{1}{\tau}(e^{t/\tau}) = \dot{v}.
+$$
+
+We now convert this to a discrete equation as follows:
+
+$$
+\tau\frac{\Delta v}{\Delta t} = F - v = \frac{\tau}{\Delta t}\Delta v = n \Delta v
+$$
+
+or
+
+$$
+\Delta v = \frac{1}{n}(F - v).
+$$
+
+We can then compute the new value of v from the old value as follows:
+
+$$
+v_{new} = v_{old} + \frac{1}{n}(F - v_{old})
+$$
+
+

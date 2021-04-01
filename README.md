@@ -1,6 +1,10 @@
+[editor.php](editor.php)
+
 [link to github repository of The Pyramids at github.com/lafelabs/ThePyramids](https://github.com/LafeLabs/ThePyramids/)
 
 [link to copy readme from github to local scroll](copy.php?from=https://raw.githubusercontent.com/LafeLabs/ThePyramids/main/README.md&to=scrolls/thepyramids)
+
+
 
 ## [scrolleditor.html](scrolleditor.html)
 
@@ -85,6 +89,7 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 {
 
  - Pyramid
+ - [oscillator scroll](mathuser.php?scroll=scrolls/oscillator)
  - capstone with a 1.5 inch square top and four sides made from trapezoids with 3 inch base, 1.5 inch top, 60 degree bottom angles and 120 degree top angles
  - capstone duct taped with pink duct tape on top of 3 inch square top
  - trash robot 5 shield board stuffed with transistor, diode, 10k resistor, male barrel for voltage in, female for voltage out, four pin header at I2C output

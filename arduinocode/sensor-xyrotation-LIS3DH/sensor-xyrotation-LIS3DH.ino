@@ -37,8 +37,6 @@ float ymean = 0.0;
 
 int m=0;
 float F = 0.0;
-float Fmax = 1023.0;
-float gamma = 7.0;
 float vold = 0.0;
 float vnew = 0.0;
 int deltat = 30;  //3 Hz/8
@@ -46,7 +44,10 @@ float v=0.0;
 float vmax = 255.0;
 float vmin = 20.0;
 
-float k = 20.0;
+//float gamma = 7.0;
+//float k = 20.0;
+float k = 140.0;
+
 float n = 0.0;
 int tau = 500;
 int i = 0;
@@ -120,13 +121,8 @@ void loop() {
 
   F /= 2;
 
-  if (F > Fmax){
-    F = Fmax;
-  }  
-  vnew = vold + ((F*gamma - vold)/n);
-  
+  vnew = vold + ((F - vold)/n);  
   vold = vnew;
-
 
   motorspeed = vnew;  
   if (vnew > vmax)
@@ -139,21 +135,10 @@ void loop() {
 
   
   analogWrite(motorpin,motorspeed);
-  
+
   Serial.println(motorspeed);
 
-//Serial.print(vnew);
-//  Serial.print(",");
- // Serial.print(P[i]);
- // Serial.print(",");  
- // Serial.println(x[0]);
   
-  //  Serial.print(","); Serial.print(event.acceleration.y); 
-  //Serial.print(","); Serial.println(event.acceleration.z); 
-
-  //Serial.println();
-   
-
   delay(deltat); 
 
 }
