@@ -16,9 +16,6 @@ The Pyramids are a set of technological artifacts.  Each Pyramid is made from th
 
 All Trash Robot is made from upcycled components, rainbow duct tape, and googley eyes.  Geometron gives us a way to describe the geometry of the objects made from trash so that they can be replicated.  We make [Geometron Shapes](http://trashrobot.org/user.php?scroll=scrolls/shapes) from laser cut 1/8 inch neon green acrylic.  Or just construct them from paper with any geometry tools.  We make the ArtBox 
 
-![](https://i.imgur.com/roIupX8.jpg)
-
-![](https://i.imgur.com/coRYMPd.jpg)
 
 The "brains" of The Pyramids are based on the Arduino UNO with a standard shield board which can be used for various applications. 
 
@@ -41,6 +38,10 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 
 ## Gyrator:
 
+![](https://i.imgur.com/mb1YeMD.jpg)
+
+![](https://i.imgur.com/Qeg71wb.jpg)
+
 {
 
  - pyramid
@@ -55,6 +56,8 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 }
 
 ## Knob:
+
+![](https://i.imgur.com/Kix62tB.jpg)
 
 {
 
@@ -72,6 +75,10 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 
 ## Pyramid:
 
+![](https://i.imgur.com/roIupX8.jpg)
+
+![](https://i.imgur.com/coRYMPd.jpg)
+
 {
 
  - 6 inch square base
@@ -85,6 +92,8 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 }
 
 ## Short Sensor:
+
+![](https://i.imgur.com/FWqYsSz.jpg)
 
 {
 
@@ -104,6 +113,8 @@ The "brains" of The Pyramids are based on the Arduino UNO with a standard shield
 }
 
 ## Tall Sensor:
+
+![](https://i.imgur.com/G6nIYZG.jpg)
 
 {
 
